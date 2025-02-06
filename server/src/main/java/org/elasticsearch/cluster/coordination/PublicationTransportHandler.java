@@ -72,6 +72,7 @@ public class PublicationTransportHandler {
 
     private final TransportService transportService;
     private final NamedWriteableRegistry namedWriteableRegistry;
+    /** @see Coordinator#handlePublishRequest(PublishRequest) */
     private final Function<PublishRequest, PublishWithJoinResponse> handlePublishRequest;
 
     private final AtomicReference<ClusterState> lastSeenClusterState = new AtomicReference<>();
@@ -109,6 +110,7 @@ public class PublicationTransportHandler {
 
         transportService.registerRequestHandler(COMMIT_STATE_ACTION_NAME, ThreadPool.Names.GENERIC, false, false,
             ApplyCommitRequest::new,
+            /** @see Coordinator#handleApplyCommit(ApplyCommitRequest, ActionListener) */
             (request, channel, task) -> handleApplyCommit.accept(request, transportCommitCallback(channel)));
 
         transportService.registerRequestHandler(PublishClusterStateAction.COMMIT_ACTION_NAME,

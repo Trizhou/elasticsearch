@@ -38,6 +38,7 @@ import org.elasticsearch.common.unit.ByteSizeValue;
 import org.elasticsearch.common.util.BigArrays;
 import org.elasticsearch.common.util.concurrent.ReleasableLock;
 import org.elasticsearch.core.internal.io.IOUtils;
+import org.elasticsearch.index.seqno.LocalCheckpointTracker;
 import org.elasticsearch.index.seqno.SequenceNumbers;
 import org.elasticsearch.index.shard.ShardId;
 
@@ -77,6 +78,10 @@ public class TranslogWriter extends BaseTranslogReader implements Closeable {
     private final LongSupplier minTranslogGenerationSupplier;
 
     // callback that's called whenever an operation with a given sequence number is successfully persisted.
+    /**
+     * [ZJH] {@link org.elasticsearch.index.engine.InternalEngine#InternalEngine}
+     * {@link LocalCheckpointTracker#markSeqNoAsPersisted}
+     */
     private final LongConsumer persistedSequenceNumberConsumer;
 
     protected final AtomicBoolean closed = new AtomicBoolean(false);

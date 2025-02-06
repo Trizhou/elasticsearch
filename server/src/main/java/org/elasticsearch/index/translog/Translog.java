@@ -40,6 +40,7 @@ import org.elasticsearch.core.internal.io.IOUtils;
 import org.elasticsearch.index.IndexSettings;
 import org.elasticsearch.index.VersionType;
 import org.elasticsearch.index.engine.Engine;
+import org.elasticsearch.index.seqno.LocalCheckpointTracker;
 import org.elasticsearch.index.seqno.SequenceNumbers;
 import org.elasticsearch.index.shard.AbstractIndexShardComponent;
 import org.elasticsearch.index.shard.IndexShardComponent;
@@ -130,6 +131,10 @@ public class Translog extends AbstractIndexShardComponent implements IndexShardC
     private final LongSupplier primaryTermSupplier;
     private final String translogUUID;
     private final TranslogDeletionPolicy deletionPolicy;
+    /**
+     * [ZJH] {@link org.elasticsearch.index.engine.InternalEngine#InternalEngine}
+     * {@link LocalCheckpointTracker#markSeqNoAsPersisted}
+     */
     private final LongConsumer persistedSequenceNumberConsumer;
 
     /**

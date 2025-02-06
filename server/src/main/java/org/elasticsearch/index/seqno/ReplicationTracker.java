@@ -39,6 +39,7 @@ import org.elasticsearch.gateway.WriteStateException;
 import org.elasticsearch.index.IndexSettings;
 import org.elasticsearch.index.engine.SafeCommitInfo;
 import org.elasticsearch.index.shard.AbstractIndexShardComponent;
+import org.elasticsearch.index.shard.GlobalCheckpointListeners;
 import org.elasticsearch.index.shard.IndexShard;
 import org.elasticsearch.index.shard.ReplicationGroup;
 import org.elasticsearch.index.shard.ShardId;
@@ -162,6 +163,7 @@ public class ReplicationTracker extends AbstractIndexShardComponent implements L
      * A callback invoked when the in-memory global checkpoint is updated. For primary mode this occurs if the computed global checkpoint
      * advances on the basis of state changes tracked here. For non-primary mode this occurs if the local knowledge of the global checkpoint
      * advances due to an update from the primary.
+     * [ZJH] {@link GlobalCheckpointListeners#globalCheckpointUpdated}
      */
     private final LongConsumer onGlobalCheckpointUpdated;
 

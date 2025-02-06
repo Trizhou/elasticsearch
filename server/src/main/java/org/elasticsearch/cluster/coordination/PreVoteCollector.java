@@ -53,7 +53,9 @@ public class PreVoteCollector {
     public static final String REQUEST_PRE_VOTE_ACTION_NAME = "internal:cluster/request_pre_vote";
 
     private final TransportService transportService;
+    /** @see Coordinator#startElection() */
     private final Runnable startElection;
+    /** @see Coordinator#updateMaxTermSeen(long) */
     private final LongConsumer updateMaxTermSeen;
     private final ElectionStrategy electionStrategy;
     private NodeHealthService nodeHealthService;

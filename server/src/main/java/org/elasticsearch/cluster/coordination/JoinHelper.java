@@ -137,6 +137,7 @@ public class JoinHelper {
         };
 
         transportService.registerRequestHandler(JOIN_ACTION_NAME, ThreadPool.Names.GENERIC, false, false, JoinRequest::new,
+            /** @see Coordinator#handleJoinRequest(JoinRequest, JoinCallback) */
             (request, channel, task) -> joinHandler.accept(request, transportJoinCallback(request, channel)));
 
         transportService.registerRequestHandler(MembershipAction.DISCOVERY_JOIN_ACTION_NAME,
@@ -149,6 +150,10 @@ public class JoinHelper {
             StartJoinRequest::new,
             (request, channel, task) -> {
                 final DiscoveryNode destination = request.getSourceNode();
+                /**
+                 * @see Coordinator#getCurrentTerm()
+                 * @see Coordinator#joinLeaderInTerm(StartJoinRequest)
+                 */
                 sendJoinRequest(destination, currentTermSupplier.getAsLong(), Optional.of(joinLeaderInTerm.apply(request)));
                 channel.sendResponse(Empty.INSTANCE);
             });
